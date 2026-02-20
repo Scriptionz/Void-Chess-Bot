@@ -1,56 +1,161 @@
-With the introduction of NNUE, the cost of training networks and competing with top engines, while still making an original effort, has gone up significantly. As a result, Ethereal moved to being commercial with the release of NNUE, a move which was met by support from the community, in order to ensure I could continue to work on the project. To purchase a copy of Ethereal, you can head to [the official webpage](http://chess.grantnet.us/Ethereal), to read more.
+<div align="center">
 
-# Ethereal
+  [![Stockfish][stockfish128-logo]][website-link]
 
-Ethereal is a UCI-compliant chess engine operating under the alpha-beta framework, paired with a Neural Network for positional evaluations. Ethereal is inspired by a number of open source projects and aims to serve as both a high-end engine and reference for other authors. The project strives to keep the source and its ideas, however complex, clean and digestible. To read more about some of the techniques used in Ethereal, see [Ethereal's Chess Programming Wiki Page](https://www.chessprogramming.org/Ethereal)
+  <h3>Stockfish</h3>
 
-# Development
+  A free and strong UCI chess engine.
+  <br>
+  <strong>[Explore Stockfish docs »][wiki-link]</strong>
+  <br>
+  <br>
+  [Report bug][issue-link]
+  ·
+  [Open a discussion][discussions-link]
+  ·
+  [Discord][discord-link]
+  ·
+  [Blog][website-blog-link]
 
-The primary testing platform for Ethereal is [OpenBench](https://github.com/AndyGrant/OpenBench), a Fishtest inspired framework. OpenBench is a simplified and generalized framework, allowing many other engines to share the same framework for testing. [The primary instance of OpenBench can be found here.](http://chess.grantnet.us/) This instance houses development for a dozen or more engines, while private instances of OpenBench exist for many other engines in the open source community.
+  [![Build][build-badge]][build-link]
+  [![License][license-badge]][license-link]
+  <br>
+  [![Release][release-badge]][release-link]
+  [![Commits][commits-badge]][commits-link]
+  <br>
+  [![Website][website-badge]][website-link]
+  [![Fishtest][fishtest-badge]][fishtest-link]
+  [![Discord][discord-badge]][discord-link]
 
-All versions of Ethereal in this repository are considered official releases, and are given a unique version number which can be found in ``uci.c``, or by using the ``uci`` command inside the engine.
+</div>
 
-The strength of Ethereal can be tracked by following various rating lists, including [CCRL's Blitz List](https://ccrl.chessdom.com/ccrl/404/), [CCRL's 40/15 List](https://ccrl.chessdom.com/ccrl/4040/), [CCRL's FRC List](https://ccrl.chessdom.com/ccrl/404FRC/), many of [FastGM's Lists](http://www.fastgm.de/#), as well as at [CEGT](http://cegt.net/) and [SPCC](https://www.sp-cc.de/).
+## Overview
 
-# A Note about the GPLv3
+[Stockfish][website-link] is a **free and strong UCI chess engine** derived from
+Glaurung 2.1 that analyzes chess positions and computes the optimal moves.
 
-Ethereal, as well as the projects that support Ethereal like [OpenBench](https://github.com/AndyGrant/OpenBench) and [NNTrainer](https://github.com/AndyGrant/NNTrainer) are licensed under the GPLv3. The GPLv3 gives you, the user, the right to have access to the source code of the engine, the right to redistribute the GPLv3'ed portions of the project, as well as the right to reuse the Ethereal source in any capacity so long as you continue to comply with the GPLv3's license.
+Stockfish **does not include a graphical user interface** (GUI) that is required
+to display a chessboard and to make it easy to input moves. These GUIs are
+developed independently from Stockfish and are available online. **Read the
+documentation for your GUI** of choice for information about how to use
+Stockfish with it.
 
-Open Source chess engines have accelerated the development of computer chess in immeasurable ways. If not for the early adopters of the Open Source methods, computer chess would not be what it is today. Powerful programs like Stockfish simply would not exist in their current forms. All of this is possible because the authors have empowered users by granting them rights to the code, only asking that you carry on propagating the licenses attached to their code. This is a small ask, for such a great gift, and yet we live in a time where that gift is not appreciated by some, and worse taken advantage of.
+See also the Stockfish [documentation][wiki-usage-link] for further usage help.
 
-Ethereal shares in the collective knowledge generated and maintained by the Computer Chess Community. However, there are three elements of Ethereal for which explicit attribution is necessary for a good faith effort at carrying out the GPLv3. This attribution has been given when the code was committed, but is restated here for clarity: Ethereal makes use of the universally adopted [Syzygy Tablebases](https://github.com/syzygy1/tb), a project under the GPLv2 and other compatible licenses. Ethereal makes use of a forked version of [Fathom](https://github.com/jdart1/Fathom), a project under the MIT license, used to implement Syzygy. Lastly, Ethereal shares a chunk of code for dealing with the Windows Operating System, which was originally written by Texel author Peter Österlund, and has since been refined and improved in various Stockfish forks, once again under GPLv3 compatible licenses.
+## Files
 
-# Configuration
+This distribution of Stockfish consists of the following files:
 
-Ethereal supports a number of relatively standard options. Definitions and recommendations are below.
-Most GUIs should support a method to set each option. If they do not, then refer to the UCI specification.
+  * [README.md][readme-link], the file you are currently reading.
 
-### Hash
+  * [Copying.txt][license-link], a text file containing the GNU General Public
+    License version 3.
 
-The size of the hash table in megabytes. For analysis the more hash given the better. For testing against other engines, just be sure to give each engine the same amount of Hash. 64MB/thread/minute is generally a good value. For testing against non-classical engines, reach out to me and I will make a recommendation.
+  * [AUTHORS][authors-link], a text file with the list of authors for the project.
 
-### Threads
+  * [src][src-link], a subdirectory containing the full source code, including a
+    Makefile that can be used to compile Stockfish on Unix-like systems.
 
-Number of threads given to Ethereal while moving. Typically the more threads the better. There is some debate as to whether using hyper-threads provides an elo gain. I firmly believe that for Ethereal the answer is yes, and recommend all users make use of the maximum number of threads.
+  * a file with the .nnue extension, storing the neural network for the NNUE
+    evaluation. Binary distributions will have this file embedded.
 
-### MultiPV
+## Contributing
 
-The number of lines to output for each search iteration. For best performance, MultiPV should be left at the default value of 1 in all cases. This option should only be used for analysis.
+__See [Contributing Guide](CONTRIBUTING.md).__
 
-### MoveOverhead
+### Donating hardware
 
-The time buffer when playing games under time constraints. If you notice any time losses you should increase the move overhead. Additionally when playing with Syzygy Table bases a larger than default overhead is recommended.
+Improving Stockfish requires a massive amount of testing. You can donate your
+hardware resources by installing the [Fishtest Worker][worker-link] and viewing
+the current tests on [Fishtest][fishtest-link].
 
-### SyzygyPath
+### Improving the code
 
-Path to Syzygy table bases. Separate multiple files paths with a semicolon on Windows, and by a colon on Unix-based systems.
+In the [chessprogramming wiki][programming-link], many techniques used in
+Stockfish are explained with a lot of background information.
+The [section on Stockfish][programmingsf-link] describes many features
+and techniques used by Stockfish. However, it is generic rather than
+focused on Stockfish's precise implementation.
 
-### SyzygyProbeDepth
+The engine testing is done on [Fishtest][fishtest-link].
+If you want to help improve Stockfish, please read this [guideline][guideline-link]
+first, where the basics of Stockfish development are explained.
 
-Minimum depth to start probing table bases (although this depth is ignored when a position with a cardinality less than the size of the given table bases is reached). Without a strong SSD, this option may need to be increased from the default of 0. I have a SyzygyProbeDepth of 6 or 8 to be acceptable.
+Discussions about Stockfish take place these days mainly in the Stockfish
+[Discord server][discord-link]. This is also the best place to ask questions
+about the codebase and how to improve it.
 
-# Special Thanks
+## Compiling Stockfish
 
-I would like to thank my previous instructor, Zachary Littrell, for all of his help in my endeavors. He was my Computer Science instructor for two semesters during my senior year of high school. His encouragement, mentoring, and assistance played a vital role in the development of my Computer Science skills. In addition to being a wonderful instructor, he is also an excellent friend. He provided the guidance I needed at such a crucial time in my life, allowing me to pursue Computer Science in a way I never imagined I could.
+Stockfish has support for 32 or 64-bit CPUs, certain hardware instructions,
+big-endian machines such as Power PC, and other platforms.
+
+On Unix-like systems, it should be easy to compile Stockfish directly from the
+source code with the included Makefile in the folder `src`. In general, it is
+recommended to run `make help` to see a list of make targets with corresponding
+descriptions. An example suitable for most Intel and AMD chips:
+
+```
+cd src
+make -j profile-build
+```
+
+Detailed compilation instructions for all platforms can be found in our
+[documentation][wiki-compile-link]. Our wiki also has information about
+the [UCI commands][wiki-uci-link] supported by Stockfish.
+
+## Terms of use
+
+Stockfish is free and distributed under the
+[**GNU General Public License version 3**][license-link] (GPL v3). Essentially,
+this means you are free to do almost exactly what you want with the program,
+including distributing it among your friends, making it available for download
+from your website, selling it (either by itself or as part of some bigger
+software package), or using it as the starting point for a software project of
+your own.
+
+The only real limitation is that whenever you distribute Stockfish in some way,
+you MUST always include the license and the full source code (or a pointer to
+where the source code can be found) to generate the exact binary you are
+distributing. If you make any changes to the source code, these changes must
+also be made available under GPL v3.
+
+## Acknowledgements
+
+Stockfish uses neural networks trained on [data provided by the Leela Chess Zero
+project][lc0-data-link], which is made available under the [Open Database License][odbl-link] (ODbL).
 
 
+[authors-link]:       https://github.com/official-stockfish/Stockfish/blob/master/AUTHORS
+[build-link]:         https://github.com/official-stockfish/Stockfish/actions/workflows/stockfish.yml
+[commits-link]:       https://github.com/official-stockfish/Stockfish/commits/master
+[discord-link]:       https://discord.gg/GWDRS3kU6R
+[issue-link]:         https://github.com/official-stockfish/Stockfish/issues/new?assignees=&labels=&template=BUG-REPORT.yml
+[discussions-link]:   https://github.com/official-stockfish/Stockfish/discussions/new
+[fishtest-link]:      https://tests.stockfishchess.org/tests
+[guideline-link]:     https://github.com/official-stockfish/fishtest/wiki/Creating-my-first-test
+[license-link]:       https://github.com/official-stockfish/Stockfish/blob/master/Copying.txt
+[programming-link]:   https://www.chessprogramming.org/Main_Page
+[programmingsf-link]: https://www.chessprogramming.org/Stockfish
+[readme-link]:        https://github.com/official-stockfish/Stockfish/blob/master/README.md
+[release-link]:       https://github.com/official-stockfish/Stockfish/releases/latest
+[src-link]:           https://github.com/official-stockfish/Stockfish/tree/master/src
+[stockfish128-logo]:  https://stockfishchess.org/images/logo/icon_128x128.png
+[uci-link]:           https://backscattering.de/chess/uci/
+[website-link]:       https://stockfishchess.org
+[website-blog-link]:  https://stockfishchess.org/blog/
+[wiki-link]:          https://github.com/official-stockfish/Stockfish/wiki
+[wiki-compile-link]:  https://github.com/official-stockfish/Stockfish/wiki/Compiling-from-source
+[wiki-uci-link]:      https://github.com/official-stockfish/Stockfish/wiki/UCI-&-Commands
+[wiki-usage-link]:    https://github.com/official-stockfish/Stockfish/wiki/Download-and-usage
+[worker-link]:        https://github.com/official-stockfish/fishtest/wiki/Running-the-worker
+[lc0-data-link]:      https://storage.lczero.org/files/training_data
+[odbl-link]:          https://opendatacommons.org/licenses/odbl/odbl-10.txt
+
+[build-badge]:        https://img.shields.io/github/actions/workflow/status/official-stockfish/Stockfish/stockfish.yml?branch=master&style=for-the-badge&label=stockfish&logo=github
+[commits-badge]:      https://img.shields.io/github/commits-since/official-stockfish/Stockfish/latest?style=for-the-badge
+[discord-badge]:      https://img.shields.io/discord/435943710472011776?style=for-the-badge&label=discord&logo=Discord
+[fishtest-badge]:     https://img.shields.io/website?style=for-the-badge&down_color=red&down_message=Offline&label=Fishtest&up_color=success&up_message=Online&url=https%3A%2F%2Ftests.stockfishchess.org%2Ftests%2Ffinished
+[license-badge]:      https://img.shields.io/github/license/official-stockfish/Stockfish?style=for-the-badge&label=license&color=success
+[release-badge]:      https://img.shields.io/github/v/release/official-stockfish/Stockfish?style=for-the-badge&label=official%20release
+[website-badge]:      https://img.shields.io/website?style=for-the-badge&down_color=red&down_message=Offline&label=website&up_color=success&up_message=Online&url=https%3A%2F%2Fstockfishchess.org
