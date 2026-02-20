@@ -30,17 +30,22 @@ jobs:
           mv Cerebellum3Merge.bin book.bin
           echo "✅ Kitap hazır: $(ls -lh book.bin)"
 
-      - name: Stockfish Motorunu İndir (VOID)
+      - name: Stockfish 18 Motorunu Indir
         run: |
-          echo "🚀 VOID için Stockfish indiriliyor..."
-          curl -L "https://github.com/official-stockfish/Stockfish/releases/latest/download/stockfish-ubuntu-x86-64-avx2.tar.gz" -o stockfish.tar.gz
-          # Klasör yapısı ne olursa olsun güvenli çıkarma
-          mkdir -p sf_temp
-          tar -xvf stockfish.tar.gz -C sf_temp
-          # 'stockfish' ile başlayan dosyayı bul ve src/Ethereal olarak taşı
-          find sf_temp -type f -name "stockfish*" -exec mv {} ./src/Ethereal \;
+          echo "🌌 VOID için Stockfish 18 (Latest) hazırlanıyor..."
+          # Resmi Stockfish reposundan en son Ubuntu sürümünü çekiyoruz
+          curl -L "https://github.com/official-stockfish/Stockfish/releases/latest/download/stockfish-ubuntu-x86-64-avx2.tar.gz" -o sf18.tar.gz
+          
+          # Dosyayı çıkartalım
+          mkdir -p sf_engine
+          tar -xvf sf18.tar.gz -C sf_engine
+          
+          # İçindeki çalıştırılabilir dosyayı bul ve src/Ethereal olarak maskele
+          # Bu sayede mevcut 'lichess-bot.py' kodunu hiç değiştirmene gerek kalmaz.
+          find sf_engine -type f -name "stockfish*" -exec mv {} ./src/Ethereal \;
+          
           chmod +x ./src/Ethereal
-          echo "✅ Stockfish hazır ve ./src/Ethereal olarak maskelendi."
+          echo "✅ Stockfish 18 başarıyla ./src/Ethereal konumuna yerleştirildi."
 
       - name: Kutuphaneleri Kur
         run: |
