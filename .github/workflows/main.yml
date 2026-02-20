@@ -1,9 +1,9 @@
-name: Oxydan Lichess Bot
+name: Void Lichess Bot
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-  
+
 on:
   workflow_dispatch: # Manuel başlatma
   schedule:
@@ -15,7 +15,6 @@ jobs:
     steps:
       - name: Kodlari Cek
         uses: actions/checkout@v4
-        # LFS: true satırını sildik, artık ihtiyacımız yok
 
       - name: Python Kurulumu
         uses: actions/setup-python@v4
@@ -25,26 +24,23 @@ jobs:
       - name: Cerebellum Kitabini Indir ve Kur
         run: |
           echo "📚 Devasa açılış kitabı indiriliyor..."
-          # Release linkini kullanarak ZIP dosyasını çekiyoruz
           curl -L "https://github.com/Scriptionz/Oxydan-Chess-Bot/releases/download/v1_Book/Cerebellum3Merge.zip" -o book.zip
-          
           echo "📂 ZIP'ten çıkarılıyor..."
           unzip book.zip
-          
-          # Dosya adını kodun tanıması için 'book.bin' yapıyoruz
           mv Cerebellum3Merge.bin book.bin
-          
           echo "✅ Kitap hazır: $(ls -lh book.bin)"
 
-      - name: Motoru Derle
+      - name: Stockfish Motorunu İndir (VOID)
         run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential clang
-          cd src
-          clang -O3 -std=gnu11 -Wall -Wextra -DNDEBUG -flto -DUSE_NNUE=0 -march=native *.c pyrrhic/tbprobe.c -lpthread -lm -o Ethereal
-          chmod +x Ethereal
-          echo "Motor basariyla derlendi."
-          cd ..
+          echo "🚀 VOID için Stockfish indiriliyor..."
+          curl -L "https://github.com/official-stockfish/Stockfish/releases/latest/download/stockfish-ubuntu-x86-64-avx2.tar.gz" -o stockfish.tar.gz
+          # Klasör yapısı ne olursa olsun güvenli çıkarma
+          mkdir -p sf_temp
+          tar -xvf stockfish.tar.gz -C sf_temp
+          # 'stockfish' ile başlayan dosyayı bul ve src/Ethereal olarak taşı
+          find sf_temp -type f -name "stockfish*" -exec mv {} ./src/Ethereal \;
+          chmod +x ./src/Ethereal
+          echo "✅ Stockfish hazır ve ./src/Ethereal olarak maskelendi."
 
       - name: Kutuphaneleri Kur
         run: |
@@ -61,6 +57,5 @@ jobs:
         run: |
           # Config dosyasındaki token yer tutucusunu güncelle
           sed -i "s/\$LICHESS_TOKEN/$LICHESS_TOKEN/g" config.yml || echo "Config hatasi!"
-          
           # Botu başlat
           python -u lichess-bot.py
