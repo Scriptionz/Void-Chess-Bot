@@ -26,12 +26,12 @@ SETTINGS = {
     "STOP_ACCEPTING_MINS": 15,    # Kapanışa kaç dk kala yeni maç almasın?
     
     # --- MOTOR VE ZAMAN YÖNETİMİ ---
-    "LATENCY_BUFFER": 0.15,       # Saniye cinsinden ağ gecikme payı (150ms)
+    "LATENCY_BUFFER": 0.2,       # Saniye cinsinden ağ gecikme payı (150ms)
     "TABLEBASE_PIECE_LIMIT": 6,   # Kaç taş kalınca tablebase'e sorsun? (6 güvenlidir)
     "MIN_THINK_TIME": 0.05,       # En az düşünme süresi
     
     # --- MESAJLAR ---
-    "GREETING": "Oxydan v7 InDev Active. System stabilized.",
+    "GREETING": "Void v1 Active. System stabilized.",
 }
 # ==========================================================
 
